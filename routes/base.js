@@ -22,7 +22,6 @@ router.route('/:id')
 router.get('/:id/edit', isLoggedIn , isAuthor,catchAsync(campgrounds.editForm))
 
  */
-router.route(['/logic','/duplicity','/format','/sculpture'])
-    .get((req,res) => {res.render('functions/general')})
+
 
 module.exports = router

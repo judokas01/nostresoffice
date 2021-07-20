@@ -24,6 +24,8 @@
   "homepage": "https://github.com/iqdevelopment/nostresoffice#readme",
   "dependencies": {
     "@mapbox/mapbox-sdk": "^0.13.0",
+    "axios": "^0.21.1",
+    "check-password-strength": "^2.0.3",
     "cloudinary": "^1.26.2",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.4.1",

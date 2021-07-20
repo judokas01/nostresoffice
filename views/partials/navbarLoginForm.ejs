@@ -1,0 +1,21 @@
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+      Přihlášení
+    </button>
+    <div class="dropdown-menu nav-form-login">
+        <form class="px-4 py-3" action="/users/login" method="POST" class="validated-form" novalidate>
+          <div class="mb-3">
+            <label for="username-nav" class="form-label">Uživatelské jméno:</label>
+            <input type="text" class="form-control" name="username"  id="username-nav" placeholder="Uživatelské jméno" autofocus required>
+          </div>
+          <div class="mb-3">
+            <label for="password-nav" class="form-label">Heslo</label>
+            <input type="password" class="form-control" name="password"  id="password-nav" placeholder="Heslo" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Přihlásit</button>
+        </form>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/users/register">Registrovat</a>
+        <a class="dropdown-item" href="/users/forgot">Zapoměnuté heslo?</a>
+      </div>
+  </div>

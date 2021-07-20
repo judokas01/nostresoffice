@@ -17,12 +17,11 @@
         <div class="navbar-nav ms-auto">
           <!--currentUser is provided by sessin-->
           <% if(currentUser){ %> 
-            <a class="nav-link" href="/users"> <%= currentUser.username %> acount</a>
-            <a class="nav-link" href="/users/logout">Logout</a>
+            <a class="nav-link" href="/users"> <%= currentUser.username %> </a>
+            <a class="nav-link" href="/users/logout">Odhlásit</a>
 
           <% }else{ %> 
-            <a class="nav-link" href="/users/login">Login</a>
-            <a class="nav-link" href="/users/register">Register</a>
+            <%- include('../partials/navbarLoginForm')  %>
           <% }%> 
 
 

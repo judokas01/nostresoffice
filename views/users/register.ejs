@@ -1,0 +1,52 @@
+<% layout('layouts/boilerplate')%>
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+            <div class="card shadow">
+
+                <div class="card-body">
+                    <h5 class="card-title">Registrace</h5>
+                    <form action="/users" method="POST" class="validated-form" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Uživatelské jméno</label>
+                            <input class="form-control" type="text" id="username" name="username" required autofocus>
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-control" type="email" id="email" name="email" required>
+                            <div class="invalid-feedback">
+                                Zadejte email ve tvaru: novak@seznam.cz
+                            </div>
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Heslo</label>
+                            <input class="form-control" type="password" id="password" name="password" required>
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="password2">Opakujte Heslo</label>
+                            <input class="form-control" type="password2" id="password2" name="password2" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="firstname">Křestní jméno</label>
+                            <input class="form-control" type="" id="firstname" name="firstname" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="lastname">Příjmení</label>
+                            <input class="form-control" type="lastname" id="lastname" name="lastname" required>
+                        </div>
+                        <button class="btn btn-success btn-block">Registrovat</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="/js/axios.min.js"></script>
+
+<script src="/js/formValidation.js"></script>

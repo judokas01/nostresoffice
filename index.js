@@ -22,6 +22,11 @@ const ejsMate = require('ejs-mate')
 //const Validators = require('./validateSchemas/index')
 //routes
 const baseRoutes = require('./routes/base')
+const duplicitiesRoutes = require('./routes/duplicities')
+const formatRoutes = require('./routes/format')
+const logicRoutes = require('./routes/logic')
+const sculptureRoutes = require('./routes/sculpture')
+const usersRoutes = require('./routes/users')
 //session control
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -166,6 +171,12 @@ const fontSrcUrls = [];
 
 //router
 app.use('/',baseRoutes)
+app.use('/duplicities',duplicitiesRoutes)
+app.use('/format',formatRoutes)
+app.use('/logic',logicRoutes)
+app.use('/sculpture',sculptureRoutes)
+app.use('/users',usersRoutes)
+
 app.use(express.static('public'))
 
 

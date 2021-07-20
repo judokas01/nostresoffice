@@ -1,0 +1,12 @@
+.card-img-top {
+  max-width: 200px;
+}
+
+.card-link {
+  text-decoration: none;
+}
+.card-link:hover {
+  color: magenta !important;
+}
+
+/*# sourceMappingURL=app.css.map */

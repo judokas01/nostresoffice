@@ -1,0 +1,11 @@
+.card-img-top{
+    max-width: 200px;
+}
+
+.card-link{
+    text-decoration: none;
+    
+    &:hover{
+        color: magenta !important;
+    }
+}

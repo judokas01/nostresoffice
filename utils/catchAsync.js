@@ -5,8 +5,8 @@
  */
 
 module.exports = func => {
-    return (req,res,next) => {
-        func(req,res,next).catch(next)
+    return (req, res, next) => {
+        func(req, res, next).catch(next)
 
     }
 }

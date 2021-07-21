@@ -1,1 +1,8 @@
 <% layout('layouts/boilerplate') %>
+
+<% if (user) { %>
+    <%  if (user.active == false) { %>
+        <%- include('../partials/notAuthentificated')  %> 
+    <% } %> 
+<% } %> 
+

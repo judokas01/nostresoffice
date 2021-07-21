@@ -16,9 +16,9 @@
             console.log('not ok')
 
           }else{
-                event.preventDefault()
+              //event.preventDefault()
               console.log('this was validated, sending')
-              sendForm()
+              //sendForm()
           }
   
           form.classList.add('was-validated')

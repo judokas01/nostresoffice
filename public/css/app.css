@@ -13,4 +13,13 @@
   left: -150px !important;
 }
 
+.custom-sidebar {
+  height: 100vh;
+}
+
+.rollable {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
 /*# sourceMappingURL=app.css.map */

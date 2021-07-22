@@ -1,8 +1,84 @@
 <% layout('layouts/boilerplate') %>
 
-<% if (user) { %>
-    <%  if (user.active == false) { %>
-        <%- include('../partials/notAuthentificated')  %> 
-    <% } %> 
-<% } %> 
+    <% if (user) { %>
+        <% if (user.active==false) { %>
+            <%- include('../partials/notAuthentificated') %>
+                <% } %>
+                    <% } %>
 
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                            <div class="col">
+                                <div class="card text-white bg-secondary mb-3">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Můj účet</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            <%= user.firstname %>
+                                                <%= user.lastname %>
+                                        </p>
+                                        <p class="card-text">Uživatelské jméno: <%= user.username %>
+                                        </p>
+                                        <p class="card-text">Email: <%= user.email %>
+                                        </p>
+                                        <p class="card-text">Předplatné: <%= user.tier %> <a href="/users/tier"
+                                                    class="btn btn-primary disabled" tabindex="-1" role="button"
+                                                    aria-disabled="true">Upravit</a> </p>
+                                        <a href="/users/newpassword" class="btn btn-primary">Změnit heslo</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card text-dark bg-light mb-3">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Poslední aktivita</h5>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <ul class="card-text">
+                                            <li>5.5. 206569</li>
+                                            <li>5.5. 206569</li>
+                                            <li>5.5. 206569</li>
+                                            <li>5.5. 206569</li>
+                                            <li>5.5. 206569</li>
+                                            <li>5.5. 206569</li>
+                                            <li>5.5. 206569</li>
+                                            <li>5.5. 206569</li>
+                                            <li>5.5. 206569</li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <% if (user.isAdmin) {%>
+                                <div class="col">
+                                    <div class="card text-dark bg-light mb-3">
+                                        <div class="card-header">
+                                            <h5 class="card-title">Vyhledat uživatele</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="card-title">
+                                                <form class="d-flex">
+                                                    <input class="form-control me-2" type="search"
+                                                        placeholder="Jméno, příjmení, email, uživatelské jméno, id"
+                                                        aria-label="Search">
+                                                    <button class="btn btn-outline-success"
+                                                        type="submit">Vyhledat</button>
+                                                </form>
+                                                <div class="rollable">
+                                                    <ul class="list-group"></ul>
+                                                    <% for (let user of users){ %>
+                                                        <a href="/users/<%= user.id %> " class="list-group-item list-group-item-action"> <%= user.firstname %> <%= user.lastname %> (<%= user.username %>) <br>  <%= user.email %> -(<%= user.id %>) </a>
+              
+                                                        <% } %>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+
+                        </div>

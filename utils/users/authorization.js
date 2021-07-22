@@ -2,20 +2,19 @@
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl
-        req.flash('error', 'You need to be signed in first!')
-        return res.redirect('/users/login')
+        req.flash('error', 'Musíte se nejdříve přihlásit!')
+        return res.redirect('/')
     }
     next()
 }
 
 module.exports.isAuthorized = async (req, res, next) => {
-    const { id } = req.params
-    const campground = await Campground.findById(id)
-    if (!campground.author.equals(req.user._id)) {
-        req.session.returnTo = req.originalUrl
-        req.flash('error', 'You dont have permission to do that!')
-        return res.redirect(`/campgrounds/${id}`)
+    if (req.user.isAdmin) {
+        next()
+    }else{
+        req.flash('error', 'Sem nemáte přístup!')
+        res.redirect(`/`)
     }
-    next()
+    
 }
 

@@ -1,0 +1,91 @@
+
+
+    <% layout('layouts/boilerplate')%>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="card shadow">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Úprava uživatele</h5>
+                            <form action="/users/<%= user.id %>" method="POST" class="validated-form" novalidate>
+                                <div class="mb-3">
+                                    <label class="form-label" for="username">Uživatelské jméno</label>
+                                    <input class="form-control" type="text" value="<%= user.username %>" id="username"
+                                        name="username" required autofocus>
+
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="email">Email</label>
+                                    <input class="form-control" type="email" value="<%= user.email %>" id="email"
+                                        name="email" required>
+                                    <div class="invalid-feedback">
+                                        Zadejte email ve tvaru: novak@seznam.cz
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="firstname">Křestní jméno</label>
+                                    <input class="form-control" type="" id="firstname" value="<%= user.firstname %>"
+                                        name="firstname" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="lastname">Příjmení</label>
+                                    <input class="form-control" type="lastname" id="lastname"
+                                        value="<%= user.lastname %>" name="lastname" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="isAdmin">Administrátor ?</label>
+                                    <input type="checkbox" id="isAdmin" name="isAdmin" <% if(user.isAdmin){ %>
+                                    checked
+                                    <% } %>
+                                        >
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="active">Aktivní ?</label>
+                                    <input type="checkbox" id="active" name="active" <% if(user.active){ %>
+                                    checked
+                                    <% } %>
+                                        >
+                                </div>
+                                <button class="btn btn-success btn-block">Upravit</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+               
+                    <div class="col-sm">
+                        <div class="card text-dark bg-light mb-3">
+                            <div class="card-header">
+                                <h5 class="card-title">Poslední aktivita</h5>
+                            </div>
+                            <div class="card-body">
+
+                                <ul class="card-text">
+                                    <li>5.5. 206569</li>
+                                    <li>5.5. 206569</li>
+                                    <li>5.5. 206569</li>
+                                    <li>5.5. 206569</li>
+                                    <li>5.5. 206569</li>
+                                    <li>5.5. 206569</li>
+                                    <li>5.5. 206569</li>
+                                    <li>5.5. 206569</li>
+                                    <li>5.5. 206569</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+
+        <script src="/js/axios.min.js"></script>
+
+        <script src="/js/formValidation.js"></script>

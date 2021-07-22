@@ -5,7 +5,7 @@ const escape = require('escape-html');
 const sanitize = require('../utils/validators/sanitize')
 const randomstring = require("randomstring")
 const { passwordStrength } = require('check-password-strength');
-const { findOneAndUpdate } = require('../models/users');
+
 
 /**
  * renders registration form
@@ -229,8 +229,15 @@ module.exports.editUserForm = async (req, res) => {
 module.exports.editUser = async (req, res) => {
     const userid = req.params.id
     !req.body.isAdmin ? req.body.isAdmin = false : req.body.isAdmin = true
-    !req.body.active ? req.body.active = false : req.body.active = true
+    if (!req.body.active) {
+        req.body.active = false
+        req.body.verifyCode = `${randomstring.generate(85)}`
+    } else {
+        req.body.active = true
+        req.body.verifyCode = ""
+    }
     const updated = req.body
+    !req.body.active ? req.body.active = false : req.body.active = true
     const user = await User.findByIdAndUpdate(userid, updated, { new: true })
     console.log(user)
     req.flash('error', 'Upraveno.')

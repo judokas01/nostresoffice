@@ -11,6 +11,8 @@ const { validateRegistration } = require('../utils/validators/validateRegistrati
 
 
 
+
+
 router.route('/')
     .get(isLoggedIn, users.renderUserPage)
     .post(/* validateRegistration, */catchAsync(users.registerUser))

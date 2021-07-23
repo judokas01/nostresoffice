@@ -1,23 +1,38 @@
-.card-img-top{
+.card-img-top {
     max-width: 200px;
 }
 
-.card-link{
+.card-link {
     text-decoration: none;
-    
-    &:hover{
+
+    &:hover {
         color: magenta !important;
     }
 }
-.nav-form-login{
+.nav-form-login {
     left: -150px !important;
 }
 
-.custom-sidebar{
+.custom-sidebar {
     height: 100vh;
 }
 
-.rollable{
-    max-height: 300px ;
+.rollable {
+    max-height: 300px;
     overflow-y: scroll;
 }
+/* (A) UPLOAD ZONE */
+#upzone {
+    width: 300px; 
+    height: 200px; 
+    background: #cfd5ff;
+    padding: 10px;
+  }
+  #upzone.highlight {
+    background: #ff0;
+  }
+  
+  /* (B) UPLOAD FORM */
+  #upform {
+    display: none;
+  }

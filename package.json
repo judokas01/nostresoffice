@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sass": "sass ./src/scss/app.scss ./public/css/app.css"
+    "sass": "sass ./src/scss/app.scss ./public/css/app.css",
+    "dev": "parcel ./src/js/* --out-dir ./public/js/ --public-url ./",
+    "build": "parcel build ./src/js/*  --out-dir ./public/js/ --public-url ./"
   },
   "repository": {
     "type": "git",
@@ -52,5 +54,8 @@
     "randomstring": "^1.2.1",
     "read-excel-file": "^5.2.8",
     "sanitize-html": "^2.4.0"
+  },
+  "devDependencies": {
+    "sass": "^1.36.0"
   }
 }

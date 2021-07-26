@@ -1,9 +1,10 @@
 <% layout('layouts/boilerplate')%>
+<link rel="stylesheet" href="/js/steptwo.css">
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <% for (file of files){ %>
 
             <div class="col">
-                <div class="card text-white bg-secondary mb-3" filename="<%= file.data.filename %>">
+                <div class="clickable card text-white bg-secondary mb-3" filename="<%= file.data.filename %>">
                     <div class="card-header">
                         <h5 class="card-title">
                             <%= file.data.originalname %>
@@ -20,3 +21,5 @@
 
             <% } %>
     </div>
+
+<script src="/js/steptwo.js"></script>

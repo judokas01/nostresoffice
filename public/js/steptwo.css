@@ -1,0 +1,81 @@
+.table-preview {
+  background-color: #9e9edd;
+  position: absolute;
+}
+
+.modal-dialog-popup {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  background-color: rgba(17, 17, 17, 0.9);
+  border: 1px solid #555555;
+  border-radius: 5px;
+  transform: translate(-50%, -50%);
+  overflow-x: scroll;
+  color: white;
+  z-index: 20;
+}
+.modal-dialog-popup table th, .modal-dialog-popup td {
+  cursor: pointer;
+}
+.modal-dialog-popup table th .highlighted, .modal-dialog-popup td .highlighted {
+  background-color: yellow !important;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 50px;
+  height: 50px;
+  font-size: 0;
+}
+
+.close:before,
+.close:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 20px;
+  background-color: #f0f0f0;
+  transform: rotate(45deg) translate(-50%, -50%);
+  transform-origin: top left;
+  transition: all 420ms;
+  content: "";
+}
+
+.close:after {
+  transform: rotate(-45deg) translate(-50%, -50%);
+}
+
+.close:hover:before,
+.close:hover:after {
+  background-color: #77ff77;
+}
+
+.modal-dialog-popup:first-of-type {
+  margin: -22px 0 0 -11px;
+}
+.modal-dialog-popup:first-of-type .close:before,
+.modal-dialog-popup:first-of-type .close:after {
+  width: 2px;
+}
+
+.modal-dialog-popup:first-of-type + .modal-dialog-popup {
+  margin: 22px 0 0 11px;
+}
+
+/* .column-1,.column-2,.column-3,.column-4,.column-5{
+    cursor: pointer;
+} */
+.highlight {
+  background-color: yellow !important;
+}
+
+.column-1:hover {
+  background-color: yellow !important;
+}
+
+/*# sourceMappingURL=steptwo.css.map */

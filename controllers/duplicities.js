@@ -40,7 +40,7 @@ module.exports.uploadFileAndStore = async (req, res, next) => {
             'Nepodporovaný typ souboru!'
         )
     }
-    // res.render('wizard/general/firstStep')
+
 
 
 }

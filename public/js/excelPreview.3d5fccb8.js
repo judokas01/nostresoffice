@@ -117,41 +117,15 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"formValidation.js":[function(require,module,exports) {
-//const { default: axios } = require("axios")
-(function () {
-  'use strict'; // Fetch all the forms we want to apply custom Bootstrap validation styles to
+})({"excelPreview/index.js":[function(require,module,exports) {
 
-  var forms = document.querySelectorAll('.validated-form'); // Loop over them and prevent submission
+},{}],"excelPreview.js":[function(require,module,exports) {
+"use strict";
 
-  Array.prototype.slice.call(forms).forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-      if (!form.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-        console.log('not ok');
-      } else {
-        //event.preventDefault()
-        console.log('this was validated, sending'); //sendForm()
-      }
+var _index = _interopRequireDefault(require("./excelPreview/index.js"));
 
-      form.classList.add('was-validated');
-    }, false);
-  });
-})();
-
-var sendForm = function sendForm() {
-  var sendObj = {
-    'username': document.getElementById('username').value,
-    'email': document.getElementById('email').value,
-    'password': document.getElementById('password').value,
-    'password2': document.getElementById('password2').value,
-    'firstname': document.getElementById('firstname').value,
-    'lastname': document.getElementById('lastname').value
-  };
-  console.log(sendObj);
-};
-},{}],"../../../../Users/hlavni/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./excelPreview/index.js":"excelPreview/index.js"}],"../../../../Users/hlavni/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -179,7 +153,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "8462" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "6950" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -355,5 +329,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../Users/hlavni/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","formValidation.js"], null)
-//# sourceMappingURL=formValidation.js.map
+},{}]},{},["../../../../Users/hlavni/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","excelPreview.js"], null)
+//# sourceMappingURL=excelPreview.3d5fccb8.js.map

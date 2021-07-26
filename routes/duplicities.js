@@ -19,7 +19,7 @@ router.route('/stepTwo')
 
 
 router.route('/stepTwo/:id')
-    .get(canAccessThisFile, duplicities.filePreview)
+    .get(/* canAccessThisFile, */ duplicities.filePreview)
 
 
 

@@ -4,7 +4,7 @@ const catchAsync = require('../utils/catchAsync')
 const User = require('../models/users')
 const passport = require('passport')
 const { isLoggedIn, isAuthorized } = require('../utils/users/authorization')
-const users = require('../controllers/users')
+const users = require('../controllers/userController')
 const { validateRegistration } = require('../utils/validators/validateRegistration')
 
 

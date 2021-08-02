@@ -1,5 +1,5 @@
 import axios from 'axios'
-import excelPreview from './excelPreview/excelPreview.js'
+import excelPreview from './excelPreview/excelPreview.js.js'
 
 module.exports.preview = (ev) => {
     document.querySelectorAll('.modal-dialog-popup').forEach(el =>

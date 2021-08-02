@@ -3,7 +3,7 @@ const { storage } = multer({ dest: 'public/uploads/' })
 const upload = multer({ storage })
 const History = require('../models/histories')
 const fs = require("fs")
-const {deleteFile} = require('../utils/deleteFile')
+const { deleteFile } = require('../utils/deleteFile')
 const filePreview = require('../utils/duplicities')
 const { sanitizeString } = require('../utils/validators/sanitize')
 
@@ -51,7 +51,7 @@ module.exports.uploadFileAndStore = async (req, res, next) => {
 module.exports.renderWizardStepOne = async (req, res, next) => {
     const filesToDelete = await History.find({ "sessionId": req.sessionID })
     filesToDelete.forEach(el => { deleteFile(el.data) })
-    await History.deleteMany({"sessionId" : req.sessionID})
+    await History.deleteMany({ "sessionId": req.sessionID })
     const functionType = 'duplicities'
     res.render('wizard/general/firstStep', { functionType })
 
@@ -62,18 +62,46 @@ module.exports.renderWizardStepOne = async (req, res, next) => {
  */
 module.exports.renderWizardStepTwo = async (req, res, next) => {
     const files = await History.find({ "sessionId": req.sessionID })
-    console.log(files)
-    res.render('wizard/duplicities/stepTwo',{files})
+    console.log(req.preview)
+    res.render('wizard/duplicities/stepTwo', { files })
 
 }
 
+
+/**
+ * this returns first 5 lines of excel file
+ */
+
 module.exports.filePreview = async (req, res, next) => {
-    const {id} = req.params
+    const { id } = req.params
     const file = await History.findOne({
         'data.filename': id
     })
 
     const result = await filePreview.getPreview(file)
     res.send(result)
+
+}
+
+
+/**
+ * validates if file structure is all the same, if not returns site with hints how to format the file, else next()
+ */
+
+module.exports.validateFilesStructure = async (req, res, next) => {
+    //console.log('called')
+    const files = await History.find({ "sessionId": req.sessionID })
+
+    const result = await filePreview.compareStructure(files)
+
+    if (result.next) {
+        const previewData = result.data
+        res.render('wizard/duplicities/stepTwo', { previewData })
+    } else {
+        req.flash('Error', result.message)
+        res.render('wizard/duplicities', { files })
+    }
+   
+
 
 }

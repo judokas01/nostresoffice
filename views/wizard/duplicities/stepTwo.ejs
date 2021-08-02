@@ -1,23 +1,8 @@
 <% layout('layouts/boilerplate')%>
 <link rel="stylesheet" href="/js/steptwo.css">
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        <% for (file of files){ %>
-
-            <div class="col">
-                <div class="clickable card text-white bg-secondary mb-3" filename="<%= file.data.filename %>">
-                    <div class="card-header">
-                        <h5 class="card-title">
-                            <%= file.data.originalname %>
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            xls
-                        </p>
-
-                    </div>
-                </div>
-            </div>
+        <% if (previewData){ %>
+            <div id="root"></div>
 
             <% } %>
     </div>

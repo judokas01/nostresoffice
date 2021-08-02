@@ -4,7 +4,7 @@ const multer = require('multer')
 const { storage } = multer({ dest: 'public/uploads/' })
 const upload = multer({ storage })
 const { canAccessThisFile } = require('../utils/users/authorization')
-const duplicities = require('../controllers/duplicities')
+const duplicities = require('../controllers/duplicityController')
 
 
 router.route('/')
@@ -15,7 +15,7 @@ router.route('/')
 
 
 router.route('/stepTwo')
-    .get(duplicities.renderWizardStepTwo)
+    .get(duplicities.validateFilesStructure, duplicities.renderWizardStepTwo)
 
 
 router.route('/stepTwo/:id')

@@ -1,11 +1,6 @@
-import preview from './wizard/spresheetPreview'
-import './../scss/excelPrevies.scss'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
+import ClickablePreview from './stepTwo/reactComponents/clickablePreview';
 
-
-document.querySelectorAll('.card').forEach(el => {
-    el.addEventListener('click', preview.preview)
-    
-})
-
-
+ReactDOM.render(<ClickablePreview />, document.getElementById('root'));

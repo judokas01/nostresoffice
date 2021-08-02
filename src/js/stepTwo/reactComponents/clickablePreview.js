@@ -1,19 +1,27 @@
 import React from 'react';
 
-import './ExpenseDate.scss';
+import './clickablePreview.scss';
+import ClickableHeader from './ClickableHeader'
+import ClickableRow from './ClickableRow'
 
-const ExpenseDate = (props) => {
-  const month = props.date.toLocaleString('en-US', { month: 'long' });
-  const day = props.date.toLocaleString('en-US', { day: '2-digit' });
-  const year = props.date.getFullYear();
+const ClickablePreview = (props) => {
+
+
+  const sheet = props.Obj.sheets[0]
 
   return (
+
     <div className='expense-date'>
-      <div className='expense-date__month'>{month}</div>
-      <div className='expense-date__year'>{year}</div>
-      <div className='expense-date__day'>{day}</div>
+      <table>
+        <thead>
+            <ClickableHeader data={sheet.data} />
+        </thead>
+
+        <ClickableRow data={sheet.data} />
+
+      </table>
     </div>
   );
 };
 
-export default ExpenseDate;
+export default ClickablePreview;

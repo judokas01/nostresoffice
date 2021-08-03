@@ -5,6 +5,7 @@ const History = require('../models/histories')
 const fs = require("fs")
 const { deleteFile } = require('../utils/deleteFile')
 const filePreview = require('../utils/duplicities')
+const {duplicityProcess} = require('../utils/duplicities/duplicitesProcess')
 const { sanitizeString } = require('../utils/validators/sanitize')
 
 
@@ -96,13 +97,26 @@ module.exports.validateFilesStructure = async (req, res, next) => {
 
     if (result.next) {
         const previewData = result.data
-        console.log('1')
+        req.session.files = files
         res.render('wizard/duplicities/stepTwo', { previewData })
     } else {
         req.flash('error', `Chyba zpracování: ${result.message}`)
         res.redirect('/duplicities')
     }
-   
 
 
+
+}
+
+
+module.exports.processFiles = async (req, res, next) => {
+    const parameters = req.body
+
+    const data = {
+        files: req.session.files,
+        params: parameters
+    }
+    const result = await duplicityProcess(data)
+
+    res.send(result)
 }

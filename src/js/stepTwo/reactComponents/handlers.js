@@ -23,7 +23,6 @@ module.exports.markColumnHandler = (ev) => {
     const cells = document.querySelectorAll(`.column-${column}`)
     const classes = ev.target.classList
     const checkbox = document.querySelector(`input[name="column-${column}"]`)
-    console.log(checkbox.checked)
 
     if (!classes.contains('marked-cell')) {
         checkbox.checked = true
@@ -49,10 +48,9 @@ module.exports.markColumnHandler = (ev) => {
  */
 const formVisibilityControl = () => {
     let any = false
-    console.log('called')
     const checkboxes = document.querySelectorAll(`input[type="checkbox"]`)
     checkboxes.forEach(element => {
-        console.log('loop')
+
         if (element.checked) {
             any = true
 

@@ -7,12 +7,14 @@ const History = require('../../models/histories')
 
 const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
+/**
+ * gets preview for excel files
+ * @param {*} fileObj 
+ * @returns 
+ */
 const getPreview = async (fileObj) => {
 	const baseFolder = __dirname
 	let filePath = path.normalize(`${baseFolder}/../../${fileObj.data.path}`)
-	//const path = fileObj.data.path
-	// const path = fs(fileObj.data.path)
-	/*   console.log(path.dirrname(fileObj.data.path))*/
 	const workbook = new ExcelJS.Workbook();
 	const output = await workbook.xlsx.readFile(`${filePath}`)
 		.then(function () {
@@ -33,13 +35,12 @@ const getPreview = async (fileObj) => {
 					sheetname: worksheet.name,
 					columns: worksheet.columnCount,
 					rows: worksheet.rowCount,
-					data: getPreviewData(worksheet)
+					data: getPreviewData(worksheet, 6)
 				})
 
 
 			}
 			return output
-			// console.log(worksheets.columns)
 
 		})
 	return output
@@ -54,13 +55,14 @@ const getPreview = async (fileObj) => {
 /**
  * input is worksheet object, returns first 6 rows including header to preview this
  */
-const getPreviewData = (worksheet) => {
-	//console.log(worksheet.columns)
+const getPreviewData = (worksheet, numberOfLines = worksheet.actualRowCount) => {
+
 	const output = []
-	for (let index = 1; index < 6; index++) {
+	for (let index = 1; index < numberOfLines; index++) {
 		const row = worksheet.getRow(index);
 		const rowData = []
 		for (let index = 1; index < worksheet.columnCount + 1; index++) {
+
 			rowData.push(row.getCell(index).value)
 
 		}
@@ -71,7 +73,9 @@ const getPreviewData = (worksheet) => {
 
 }
 
-
+/**
+ * compares if all givven file object has the same structure (number of columns and columns has the same column names)
+ */
 const compareStructure = async (files) => {
 
 	let allFilesToProcess = []
@@ -106,7 +110,7 @@ const compareStructure = async (files) => {
 				columnTitleCheck = sheet.data[0]
 			}
 
-			if(!equals(columnTitleCheck,sheet.data[0])){
+			if (!equals(columnTitleCheck, sheet.data[0])) {
 				return { next: false, message: 'Sloupce mají různé názvy!' }
 			}
 
@@ -117,6 +121,7 @@ const compareStructure = async (files) => {
 	return { next: true, data: resultData }
 
 }
+
 
 
 

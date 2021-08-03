@@ -218,4 +218,5 @@ app.use((err,req,res,next) =>{
 
 app.listen(port, () => {
     console.log(`starting app ${port}`)
+    console.log(process.env.BASE_URL)
 })

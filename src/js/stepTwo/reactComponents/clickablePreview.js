@@ -3,6 +3,8 @@ import React from 'react';
 import './clickablePreview.scss';
 import ClickableHeader from './ClickableHeader'
 import ClickableRow from './ClickableRow'
+import PreviewForm from './PreviewForm'
+import PreviewHint from './PreviewHint'
 
 const ClickablePreview = (props) => {
 
@@ -11,8 +13,9 @@ const ClickablePreview = (props) => {
 
   return (
 
-    <div className='expense-date'>
-      <table>
+    <div className='excel-preview'>
+      <PreviewHint />
+      <table className="table">
         <thead>
             <ClickableHeader data={sheet.data} />
         </thead>
@@ -20,6 +23,7 @@ const ClickablePreview = (props) => {
         <ClickableRow data={sheet.data} />
 
       </table>
+      <PreviewForm data={sheet.data}/>
     </div>
   );
 };

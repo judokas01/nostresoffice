@@ -96,10 +96,11 @@ module.exports.validateFilesStructure = async (req, res, next) => {
 
     if (result.next) {
         const previewData = result.data
+        console.log('1')
         res.render('wizard/duplicities/stepTwo', { previewData })
     } else {
-        req.flash('Error', result.message)
-        res.render('wizard/duplicities', { files })
+        req.flash('error', `Chyba zpracování: ${result.message}`)
+        res.redirect('/duplicities')
     }
    
 

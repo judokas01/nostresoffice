@@ -1,0 +1,13 @@
+.excel-preview {
+    width  : 100%;
+    padding: auto;
+    
+
+    //background-color: magenta;
+    table {
+        td {
+            cursor: pointer;
+            transition: all 0.2s ease-in;
+        }
+    }
+}

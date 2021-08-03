@@ -1,2 +1,20 @@
+.excel-preview {
+  width: 100%;
+  padding: auto;
+}
+.excel-preview table td {
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+.highligted-cell {
+  background-color: #ccff33 !important;
+}
+
+.marked-cell {
+  background-color: #70e000 !important;
+}
+.submit-group {
+  display: none;
+}
 
 /*# sourceMappingURL=steptwo.css.map */

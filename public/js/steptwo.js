@@ -29566,7 +29566,7 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"../../node_modules/react-dom/cjs/react-dom.development.js"}],"../../../../Users/hlavni/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"../../node_modules/react-dom/cjs/react-dom.development.js"}],"../../../../Users/simon/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -29598,7 +29598,7 @@ function getBaseURL(url) {
 
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
-},{}],"../../../../Users/hlavni/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+},{}],"../../../../Users/simon/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -29633,17 +29633,87 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../../../../Users/hlavni/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"stepTwo/reactComponents/clickablePreview.scss":[function(require,module,exports) {
+},{"./bundle-url":"../../../../Users/simon/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"stepTwo/reactComponents/clickablePreview.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../../../Users/hlavni/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"stepTwo/reactComponents/ClickableHeader.scss":[function(require,module,exports) {
+},{"_css_loader":"../../../../Users/simon/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"stepTwo/reactComponents/ClickableHeader.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../../../Users/hlavni/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"stepTwo/reactComponents/ClickableHeader.js":[function(require,module,exports) {
+},{"_css_loader":"../../../../Users/simon/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"stepTwo/reactComponents/handlers.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../Users/simon/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"stepTwo/reactComponents/handlers.js":[function(require,module,exports) {
+"use strict";
+
+require("./handlers.scss");
+
+module.exports.hoverEnterHandler = function (ev) {
+  var column = ev.target.getAttribute('column');
+  var cells = document.querySelectorAll(".column-".concat(column));
+  cells.forEach(function (element) {
+    element.classList.add('highligted-cell');
+  });
+};
+
+module.exports.hoverLeaveHandler = function (ev) {
+  var column = ev.target.getAttribute('column');
+  var cells = document.querySelectorAll(".column-".concat(column));
+  cells.forEach(function (element) {
+    element.classList.remove('highligted-cell');
+  });
+};
+
+module.exports.markColumnHandler = function (ev) {
+  var column = ev.target.getAttribute('column');
+  var cells = document.querySelectorAll(".column-".concat(column));
+  var classes = ev.target.classList;
+  var checkbox = document.querySelector("input[name=\"column-".concat(column, "\"]"));
+  console.log(checkbox.checked);
+
+  if (!classes.contains('marked-cell')) {
+    checkbox.checked = true;
+    formVisibilityControl();
+    cells.forEach(function (element) {
+      element.classList.add('marked-cell');
+    });
+  } else {
+    checkbox.checked = false;
+    formVisibilityControl();
+    cells.forEach(function (element) {
+      element.classList.remove('marked-cell');
+    });
+  }
+};
+/**
+ * controls visibility of next step form
+ */
+
+
+var formVisibilityControl = function formVisibilityControl() {
+  var any = false;
+  console.log('called');
+  var checkboxes = document.querySelectorAll("input[type=\"checkbox\"]");
+  checkboxes.forEach(function (element) {
+    console.log('loop');
+
+    if (element.checked) {
+      any = true;
+    }
+  });
+
+  if (any === true) {
+    document.querySelector('.form-in').classList.remove('submit-group');
+  } else {
+    document.querySelector('.form-in').classList.add('submit-group');
+  }
+};
+},{"./handlers.scss":"stepTwo/reactComponents/handlers.scss"}],"stepTwo/reactComponents/ClickableHeader.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29655,11 +29725,16 @@ var _react = _interopRequireDefault(require("react"));
 
 require("./ClickableHeader.scss");
 
+var _handlers = _interopRequireDefault(require("./handlers"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ClickableHeader = function ClickableHeader(props) {
   return /*#__PURE__*/_react.default.createElement("tr", null, props.data[0].map(function (header, index) {
     return /*#__PURE__*/_react.default.createElement("td", {
+      onMouseEnter: _handlers.default.hoverEnterHandler,
+      onMouseLeave: _handlers.default.hoverLeaveHandler,
+      onClick: _handlers.default.markColumnHandler,
       key: index,
       className: "column-".concat(index)
     }, header);
@@ -29668,7 +29743,12 @@ var ClickableHeader = function ClickableHeader(props) {
 
 var _default = ClickableHeader;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","./ClickableHeader.scss":"stepTwo/reactComponents/ClickableHeader.scss"}],"stepTwo/reactComponents/ClickableCell.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","./ClickableHeader.scss":"stepTwo/reactComponents/ClickableHeader.scss","./handlers":"stepTwo/reactComponents/handlers.js"}],"stepTwo/reactComponents/ClickableCell.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../Users/simon/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"stepTwo/reactComponents/ClickableCell.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29678,13 +29758,21 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+require("./ClickableCell.scss");
+
+var _handlers = _interopRequireDefault(require("./handlers"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ClickableCell = function ClickableCell(props) {
   var rowArray = props.cell;
   return /*#__PURE__*/_react.default.createElement("tr", null, rowArray.map(function (cell, index) {
     return /*#__PURE__*/_react.default.createElement("td", {
+      onMouseEnter: _handlers.default.hoverEnterHandler,
+      onMouseLeave: _handlers.default.hoverLeaveHandler,
+      onClick: _handlers.default.markColumnHandler,
       key: index,
+      column: index,
       className: "column-".concat(index)
     }, cell);
   }));
@@ -29692,7 +29780,7 @@ var ClickableCell = function ClickableCell(props) {
 
 var _default = ClickableCell;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js"}],"stepTwo/reactComponents/ClickableRow.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","./ClickableCell.scss":"stepTwo/reactComponents/ClickableCell.scss","./handlers":"stepTwo/reactComponents/handlers.js"}],"stepTwo/reactComponents/ClickableRow.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29724,7 +29812,90 @@ var ClickableRow = function ClickableRow(props) {
 
 var _default = ClickableRow;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","./ClickableCell":"stepTwo/reactComponents/ClickableCell.js"}],"stepTwo/reactComponents/clickablePreview.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","./ClickableCell":"stepTwo/reactComponents/ClickableCell.js"}],"stepTwo/reactComponents/PreviewForm.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../Users/simon/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"stepTwo/reactComponents/PreviewForm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+require("./PreviewForm.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PreviewForm = function PreviewForm(props) {
+  return /*#__PURE__*/_react.default.createElement("form", {
+    className: "submit-group form-in"
+  }, props.data.map(function (row, index) {
+    return /*#__PURE__*/_react.default.createElement("input", {
+      type: "checkbox",
+      name: "column-".concat(index),
+      key: "cl-".concat(index),
+      hidden: true
+    });
+  }), /*#__PURE__*/_react.default.createElement("label", null, "Soubory: "), /*#__PURE__*/_react.default.createElement("select", {
+    name: "files",
+    id: "files"
+  }, /*#__PURE__*/_react.default.createElement("option", {
+    value: "all-in-one"
+  }, "V\u0161e v jednom souboru"), /*#__PURE__*/_react.default.createElement("option", {
+    value: "in-one-sheets"
+  }, "V\u0161e v jednom souboru, ka\u017Ed\xFD list odpov\xEDd\xE1 vstupn\xEDmu souboru "), /*#__PURE__*/_react.default.createElement("option", {
+    value: "like-input"
+  }, "Stejn\xE1 struktura jako vstupn\xED soubory"), /*#__PURE__*/_react.default.createElement("option", {
+    value: "all-sheets"
+  }, "Ka\u017Ed\xFD list vstupn\xEDch soubor\u016F do souboru se jm\xE9nem listu")), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("label", null, "Rozvr\u017Een\xED: "), /*#__PURE__*/_react.default.createElement("select", {
+    name: "mode",
+    id: "mode"
+  }, /*#__PURE__*/_react.default.createElement("option", {
+    value: "unique-only"
+  }, "Z\u016Fstanou pouze unik\xE1tn\xED hodnoty"), /*#__PURE__*/_react.default.createElement("option", {
+    value: "mark-duplicities"
+  }, "Duplicitn\xED hodnoty budou ozna\u010Deny"), /*#__PURE__*/_react.default.createElement("option", {
+    value: "cut-duplicities"
+  }, "Duplicitn\xED hodnoty do extra souboru")), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("button", {
+    type: "submit"
+  }, "Dal\u0161\xED"));
+};
+
+var _default = PreviewForm;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","./PreviewForm.scss":"stepTwo/reactComponents/PreviewForm.scss"}],"stepTwo/reactComponents/PreviewHint.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../Users/simon/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"stepTwo/reactComponents/PreviewHint.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+require("./PreviewHint.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PreviewHint = function PreviewHint(props) {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "hint"
+  }, "Zvolte sloupec/sloupce, jejich\u017E kombinace mus\xED b\xFDt unik\xE1tn\xED a zvolte tla\u010D\xEDtko dal\u0161\xED.");
+};
+
+var _default = PreviewHint;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","./PreviewHint.scss":"stepTwo/reactComponents/PreviewHint.scss"}],"stepTwo/reactComponents/clickablePreview.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29740,22 +29911,30 @@ var _ClickableHeader = _interopRequireDefault(require("./ClickableHeader"));
 
 var _ClickableRow = _interopRequireDefault(require("./ClickableRow"));
 
+var _PreviewForm = _interopRequireDefault(require("./PreviewForm"));
+
+var _PreviewHint = _interopRequireDefault(require("./PreviewHint"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ClickablePreview = function ClickablePreview(props) {
   var sheet = props.Obj.sheets[0];
   return /*#__PURE__*/_react.default.createElement("div", {
-    className: "expense-date"
-  }, /*#__PURE__*/_react.default.createElement("table", null, /*#__PURE__*/_react.default.createElement("thead", null, /*#__PURE__*/_react.default.createElement(_ClickableHeader.default, {
+    className: "excel-preview"
+  }, /*#__PURE__*/_react.default.createElement(_PreviewHint.default, null), /*#__PURE__*/_react.default.createElement("table", {
+    className: "table"
+  }, /*#__PURE__*/_react.default.createElement("thead", null, /*#__PURE__*/_react.default.createElement(_ClickableHeader.default, {
     data: sheet.data
   })), /*#__PURE__*/_react.default.createElement(_ClickableRow.default, {
     data: sheet.data
-  })));
+  })), /*#__PURE__*/_react.default.createElement(_PreviewForm.default, {
+    data: sheet.data
+  }));
 };
 
 var _default = ClickablePreview;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","./clickablePreview.scss":"stepTwo/reactComponents/clickablePreview.scss","./ClickableHeader":"stepTwo/reactComponents/ClickableHeader.js","./ClickableRow":"stepTwo/reactComponents/ClickableRow.js"}],"steptwo.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","./clickablePreview.scss":"stepTwo/reactComponents/clickablePreview.scss","./ClickableHeader":"stepTwo/reactComponents/ClickableHeader.js","./ClickableRow":"stepTwo/reactComponents/ClickableRow.js","./PreviewForm":"stepTwo/reactComponents/PreviewForm.js","./PreviewHint":"stepTwo/reactComponents/PreviewHint.js"}],"steptwo.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -29769,7 +29948,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(_clickablePreview.default, {
   Obj: userFromServer
 }), document.getElementById('root'));
-},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","./stepTwo/reactComponents/clickablePreview":"stepTwo/reactComponents/clickablePreview.js"}],"../../../../Users/hlavni/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","./stepTwo/reactComponents/clickablePreview":"stepTwo/reactComponents/clickablePreview.js"}],"../../../../Users/simon/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -29797,7 +29976,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1453" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52972" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -29973,5 +30152,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../Users/hlavni/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","steptwo.js"], null)
+},{}]},{},["../../../../Users/simon/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","steptwo.js"], null)
 //# sourceMappingURL=steptwo.js.map

@@ -5,7 +5,7 @@ const History = require('../models/histories')
 const fs = require("fs")
 const { deleteFile } = require('../utils/deleteFile')
 const filePreview = require('../utils/duplicities')
-const {duplicityProcess} = require('../utils/duplicities/duplicitesProcess')
+const { duplicityProcess } = require('../utils/duplicities/duplicitesProcess')
 const { sanitizeString } = require('../utils/validators/sanitize')
 
 
@@ -63,7 +63,6 @@ module.exports.renderWizardStepOne = async (req, res, next) => {
  */
 module.exports.renderWizardStepTwo = async (req, res, next) => {
     const files = await History.find({ "sessionId": req.sessionID })
-    console.log(req.preview)
     res.render('wizard/duplicities/stepTwo', { files })
 
 }
@@ -79,7 +78,7 @@ module.exports.filePreview = async (req, res, next) => {
         'data.filename': id
     })
 
-    const result = await filePreview.getPreview(file)
+    const result = await filePreview.getPreview(file,6)
     res.send(result)
 
 }
@@ -90,14 +89,17 @@ module.exports.filePreview = async (req, res, next) => {
  */
 
 module.exports.validateFilesStructure = async (req, res, next) => {
-    //console.log('called')
+
+
     const files = await History.find({ "sessionId": req.sessionID })
 
     const result = await filePreview.compareStructure(files)
 
+
     if (result.next) {
         const previewData = result.data
         req.session.files = files
+
         res.render('wizard/duplicities/stepTwo', { previewData })
     } else {
         req.flash('error', `Chyba zpracování: ${result.message}`)
@@ -116,7 +118,8 @@ module.exports.processFiles = async (req, res, next) => {
         files: req.session.files,
         params: parameters
     }
-    const result = await duplicityProcess(data)
+    if (!req.user.username) req.user = { username: anonymous }
+    const result = await duplicityProcess(data, req.user.username)
 
     res.send(result)
 }

@@ -1,8 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import ReactDOM from 'react-dom';
 var qs = require('qs');
-
+import ClickablePreview from './ClickablePreview'
 import './PreviewForm.scss';
+import LoadingScreen from './LoadingScreen'
+import DownloadFiles from './DownloadFiles'
+
+
 
 const PreviewForm = (props) => {
 
@@ -10,15 +15,21 @@ const PreviewForm = (props) => {
         event.preventDefault()
         const formData = new FormData(event.target);
         const formProps = Object.fromEntries(formData);
+        // renders loading page
+        ReactDOM.render(<LoadingScreen />, document.getElementById('root'));
+        //
         axios.post('/duplicities/stepThree', qs.stringify(formProps), {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
+
             .then(function (response) {
+                ReactDOM.render(<DownloadFiles data={response.data} />, document.getElementById('root'));
                 console.log(response.data);
             })
-        //const formData = new FormData(document.querySelector('form'))
+
+
 
 
     }
@@ -32,22 +43,11 @@ const PreviewForm = (props) => {
                     <input type="checkbox" name={`column-${index}`} key={`cl-${index}`} hidden />
                 ))
             }
-            <label>Co uděláme se soubory?</label><br />
 
-
-
-            <select name="files" id='files'>
-                <option value="all-in-one">Vše v jednom souboru</option>
-                <option value="in-one-sheets">Vše v jednom souboru, každý list odpovídá vstupnímu souboru </option>
-                <option value="like-input">Stejná struktura jako vstupní soubory</option>
-                <option value="all-sheets">Každý list vstupních souborů do souboru se jménem listu</option>
-            </select>
-            <br /><br />
             <label>Rozvržení: </label><br />
             <select name="mode" id='mode'>
                 <option value="unique-only">Zůstanou pouze unikátní hodnoty</option>
-                <option value="mark-duplicities">Duplicitní hodnoty budou označeny</option>
-                <option value="cut-duplicities">Duplicitní hodnoty do extra souboru</option>
+                <option value="duplicities-extra-file">Duplicitní hodnoty do extra souboru</option>
             </select>
             <br /><br />
             <button type="submit">Další</button>

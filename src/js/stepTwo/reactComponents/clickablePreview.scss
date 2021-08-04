@@ -1,7 +1,7 @@
 .excel-preview {
     width  : 100%;
     padding: auto;
-    
+   
 
     //background-color: magenta;
     table {
@@ -9,5 +9,8 @@
             cursor: pointer;
             transition: all 0.2s ease-in;
         }
+    }
+    .table-preview{
+        overflow: scroll;
     }
 }

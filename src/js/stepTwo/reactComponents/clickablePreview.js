@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './clickablePreview.scss';
+import './ClickablePreview.scss';
 import ClickableHeader from './ClickableHeader'
 import ClickableRow from './ClickableRow'
 import PreviewForm from './PreviewForm'
@@ -15,6 +15,7 @@ const ClickablePreview = (props) => {
 
     <div className='excel-preview'>
       <PreviewHint />
+      <div className="table-preview">
       <table className="table">
         <thead>
             <ClickableHeader data={sheet.data} />
@@ -23,6 +24,7 @@ const ClickablePreview = (props) => {
         <ClickableRow data={sheet.data} />
 
       </table>
+      </div>
       <PreviewForm data={sheet.data}/>
     </div>
   );

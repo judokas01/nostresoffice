@@ -1,5 +1,4 @@
 const ExcelJS = require('exceljs');
-const searcher = require('./searcher')
 const path = require('path')
 const readXlsxFile = require('read-excel-file/node')
 const History = require('../../models/histories')
@@ -12,13 +11,15 @@ const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
  * @param {*} fileObj 
  * @returns 
  */
-const getPreview = async (fileObj) => {
+const getPreview = async (fileObj,numberOfLines) => {
+
 	const baseFolder = __dirname
 	let filePath = path.normalize(`${baseFolder}/../../${fileObj.data.path}`)
 	const workbook = new ExcelJS.Workbook();
+
 	const output = await workbook.xlsx.readFile(`${filePath}`)
 		.then(function () {
-			const numberOfWorksheets = workbook.worksheets.length
+
 			const worksheets = workbook.worksheets
 			const output = {
 				fileid: fileObj.data.filename,
@@ -35,9 +36,8 @@ const getPreview = async (fileObj) => {
 					sheetname: worksheet.name,
 					columns: worksheet.columnCount,
 					rows: worksheet.rowCount,
-					data: getPreviewData(worksheet, 6)
+					data: getPreviewData(worksheet, numberOfLines)
 				})
-
 
 			}
 			return output
@@ -59,10 +59,11 @@ const getPreviewData = (worksheet, numberOfLines = worksheet.actualRowCount) => 
 
 	const output = []
 	for (let index = 1; index < numberOfLines; index++) {
+		//console.log(`row : ${index}`)
 		const row = worksheet.getRow(index);
 		const rowData = []
 		for (let index = 1; index < worksheet.columnCount + 1; index++) {
-
+			//	console.log(`colum : ${index}`)
 			rowData.push(row.getCell(index).value)
 
 		}
@@ -80,17 +81,21 @@ const compareStructure = async (files) => {
 
 	let allFilesToProcess = []
 
+
+
 	for (let index = 0; index < files.length; index++) {
 		const element = files[index];
 		const file = await History.findOne({
 			'data.filename': element.data.filename
 		})
-		const result = await getPreview(file)
+		const result = await getPreview(file,6)
 		allFilesToProcess.push(result)
 	}
 
 	let columnCheck = 0
 	let columnTitleCheck = []
+
+
 
 	for (let index = 0; index < allFilesToProcess.length; index++) {
 		const file = allFilesToProcess[index];
@@ -116,8 +121,12 @@ const compareStructure = async (files) => {
 
 		}
 
+
 	}
-	const resultData = await getPreview(files[0])
+
+
+	const resultData = allFilesToProcess[0]
+
 	return { next: true, data: resultData }
 
 }

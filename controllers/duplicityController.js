@@ -54,7 +54,7 @@ module.exports.renderWizardStepOne = async (req, res, next) => {
     filesToDelete.forEach(el => { deleteFile(el.data) })
     await History.deleteMany({ "sessionId": req.sessionID })
     const functionType = 'duplicities'
-    res.render('wizard/general/firstStep', { functionType })
+    res.render('wizard/duplicities/stepOne', { functionType })
 
 }
 

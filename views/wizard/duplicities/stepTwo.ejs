@@ -1,13 +1,21 @@
 <% layout('layouts/boilerplate')%>
-<link rel="stylesheet" href="/js/steptwo.css">
+  <link rel="stylesheet" href="/js/duplicityStepTwo.css">
+  
+  <div id="root"></div>
 
-        <% if (previewData){ %>
-            <div id="root"></div>
-            <script type='text/javascript'>
-                const userFromServer =<%-JSON.stringify(previewData)%>
-              </script>
+  <% if (previewData){ %>
 
-            <% } %>
+    <script type='text/javascript'>
+      const userFromServer =<%- JSON.stringify(previewData) %>
+
+    </script>
+
+    <% } else { %>
+      <script type='text/javascript'>
+        const userFromServer = <%= false %>
+  
+      </script>
+      <% } %>
 
 
-<script src="/js/steptwo.js"></script>
+      <script src="/js/duplicityStepTwo.js"></script>

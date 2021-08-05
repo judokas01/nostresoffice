@@ -27,17 +27,4 @@
   })()
 
 
-const sendForm = () => {
-    const sendObj = {
-         'username' : document.getElementById('username').value,
-         'email' : document.getElementById('email').value,
-         'password' : document.getElementById('password').value,
-         'password2' : document.getElementById('password2').value,
-         'firstname' : document.getElementById('firstname').value,
-         'lastname' : document.getElementById('lastname').value,
-    }
-    console.log(sendObj)
-
-
-}
 

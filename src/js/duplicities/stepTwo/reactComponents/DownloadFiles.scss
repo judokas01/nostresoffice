@@ -1,0 +1,33 @@
+.center-div{
+    ul{
+        list-style: none;
+        padding-bottom: 20px;
+        padding-left: 0px;
+
+        li{
+            margin-bottom: 3px;
+
+            a{
+                text-decoration: none;
+                font-weight: bolder;
+                color: rgb(0, 0, 0);
+                margin: auto;
+                &:hover{
+                    text-decoration: underline;
+                    font-weight: 900;
+                    color: rgb(0, 0, 0);
+                }
+
+                .card-body{
+                    transition: all 0.3s ease-in;
+                    &:hover{
+                        background-color: #e0e1dd !important;
+                    }
+                }
+
+            } 
+        }
+    }
+   
+}
+

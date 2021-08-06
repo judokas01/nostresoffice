@@ -23,7 +23,7 @@ const RejectedFiles = (props) => {
 
 
     return (
-        <ul>
+        <ul className="file-list">
             {props.state.map((el,index )=> {
                 return (
                     <li key={index}> {el.name} - {`${(Math.round(((el.size) / 1048576) * 10) / 10)} MB`} - {czechError(el.error)}</li>

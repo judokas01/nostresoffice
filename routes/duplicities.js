@@ -21,7 +21,7 @@ router.route('/stepTwo')
 router.route('/stepTwo/:id')
     .get(/* canAccessThisFile, */ duplicities.filePreview)
 
-    router.route('/stepThree')
+router.route('/stepThree')
     .post(/* canAccessThisFile, */ duplicities.processFiles)
 
 

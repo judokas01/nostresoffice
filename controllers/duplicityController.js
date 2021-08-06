@@ -22,7 +22,8 @@ module.exports.uploadFileAndStore = async (req, res, next) => {
 
     if (allowedUploads.includes(req.file.mimetype)) {
         if (!req.user) {
-            req.user._id = 'anonymous'
+            req.flash('error', `Pro nahrání souboru musíte být přihlášení.`)
+            res.redirect('/users/login')
         }
         const data = {
             author: req.user._id,
@@ -33,7 +34,8 @@ module.exports.uploadFileAndStore = async (req, res, next) => {
         }
         const result = new History(data)
         await result.save()
-        res.send('ok')
+        await res.send(result)
+
     } else {
         //deletes unsuported files
         deleteFile(req.file)
@@ -78,7 +80,7 @@ module.exports.filePreview = async (req, res, next) => {
         'data.filename': id
     })
 
-    const result = await filePreview.getPreview(file,6)
+    const result = await filePreview.getPreview(file, 6)
     res.send(result)
 
 }
@@ -123,3 +125,4 @@ module.exports.processFiles = async (req, res, next) => {
 
     res.send(result)
 }
+

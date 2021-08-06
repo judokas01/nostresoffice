@@ -7,11 +7,13 @@ import ErrorFlash from './ErrorFlash'
 import { sendLoader, uploadVerifier } from './../handlers/handlers'
 import { useDropzone } from 'react-dropzone';
 import './dropzone.min.css'
+import 'regenerator-runtime/runtime'
 
 
 const StepOne = (props) => {
 
 	const [acceptedFilesArray, setAcceptedFiles] = useState([]);
+	const handleAcceptedChange = (newVal) => { setAcceptedFiles(newVal) }
 	const [rejectedFilesArray, setRejectedFiles] = useState([]);
 	const [flashMessages, setFlashMessages] = useState([]);
 
@@ -24,7 +26,7 @@ const StepOne = (props) => {
 		accept: '.csv,.xlsx',
 		maxSize: 2621440,
 		multiple: true,
-		maxFiles: 5,
+		maxFiles: 0,
 		onDropAccepted: files => uploadHandler(files),
 		onDropRejected: files => rejectionHandler(files)
 	});
@@ -34,18 +36,22 @@ const StepOne = (props) => {
 	 * handles transer of state and file upload
 	 */
 
-	const uploadHandler = (onDropAccepted) => {
-		onDropAccepted.map((el, index) => {
-			setAcceptedFiles((prevState) => {
-				// upload limit checker
-				if (uploadVerifier(el, prevState, props, setFlashMessages) === true) {
-					return [...prevState, { name: el.name, size: el.size }]
-				} else {
-					//setFlashMessages( (ps) => { return [...ps,{message: 'Byl překročen maximální počet nahraných souborů'}]})
-					return [...prevState]
-				}
+	const uploadHandler = async (onDropAccepted) => {
+		await onDropAccepted.map(async (el, index) => {
+			const result = await uploadVerifier(el, acceptedFilesArray, props, setFlashMessages)
 
-			})
+			if (result != false) {	
+				setAcceptedFiles((prevState) => {
+					return [...prevState, { name: el.name, size: el.size, filename: result.data.data.filename }]
+				})
+
+	
+			} else {
+				//setFlashMessages( (ps) => { return [...ps,{message: 'Byl překročen maximální počet nahraných souborů'}]})
+				//return [...prevState]
+			}
+
+
 		})
 
 	}
@@ -79,7 +85,7 @@ const StepOne = (props) => {
 
 			<aside>
 				<h4>Přijaté soubory</h4>
-				<UploadedFiles state={acceptedFilesArray} />
+				<UploadedFiles state={acceptedFilesArray} onChange={handleAcceptedChange} />
 				<h4>Odmítnuté soubory</h4>
 				<RejectedFiles state={rejectedFilesArray} />
 			</aside>

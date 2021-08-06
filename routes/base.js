@@ -1,10 +1,17 @@
 const express = require('express')
 const router = express.Router()
+const general = require('../controllers/generalController')
+const { canAccessThisFile } = require('../utils/users/authorization')
 
 router.route('/')
     .get((req, res) => {
         res.render('homepage')
     })
+
+router.route('/:filename')
+    .delete(/* canAccessThisFile, */ general.deleteFile)
+
+
 /* .post(isLoggedIn, upload.array('images'),  catchAsync(campgrounds.createCampground))
  .post( upload.array('images'), (req,res) => {
 

@@ -3,4 +3,4 @@ node_modules
 .cache
 public/uploads
 public/downloads/*
-public/js
+public/js/

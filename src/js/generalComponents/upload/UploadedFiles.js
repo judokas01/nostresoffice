@@ -5,17 +5,18 @@ import axios from 'axios';
 const deleteReq = async (filename) => {
     const request = await axios.delete(`/${filename}`)
     console.log(request)
+    return request
 
 }
 
 
 const UploadedFiles = (props) => {
 
-    const removeElement = async (index, filename) => {
+    const removeElement = (index, filename) => {
         //přidat axios call to delete/*  */
-        props.onChange(async (prevState) => {
+        props.onChange((prevState) => {
             prevState.splice(index, 1)
-            await deleteReq(filename)
+            deleteReq(filename)
             return [...prevState]
         })
     }

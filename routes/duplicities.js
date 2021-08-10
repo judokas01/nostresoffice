@@ -5,10 +5,11 @@ const { storage } = multer({ dest: 'public/uploads/' })
 const upload = multer({ storage })
 const { canAccessThisFile } = require('../utils/users/authorization')
 const duplicities = require('../controllers/duplicityController')
+const generalController = require('./../controllers/generalController')
 
 
 router.route('/')
-    .get(duplicities.renderWizardStepOne)
+    .get(generalController.renderHintForAnonymousUsers, duplicities.renderWizardStepOne)
     .post(upload.single('file'), duplicities.uploadFileAndStore)
 
 

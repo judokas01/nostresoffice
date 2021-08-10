@@ -1,7 +1,7 @@
 const ExcelJS = require('exceljs');
 const path = require('path')
 const readXlsxFile = require('read-excel-file/node')
-const History = require('../../models/histories')
+const Task = require('../../models/tasks')
 
 
 const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -85,7 +85,7 @@ const compareStructure = async (files) => {
 
 	for (let index = 0; index < files.length; index++) {
 		const element = files[index];
-		const file = await History.findOne({
+		const file = await Task.findOne({
 			'data.filename': element.data.filename
 		})
 		const result = await getPreview(file,6)

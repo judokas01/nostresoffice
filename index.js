@@ -27,6 +27,7 @@ const formatRoutes = require('./routes/format')
 const logicRoutes = require('./routes/logic')
 const sculptureRoutes = require('./routes/sculpture')
 const usersRoutes = require('./routes/users')
+const helpRoutes = require('./routes/help')
 //session control
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -176,6 +177,7 @@ app.use('/format',formatRoutes)
 app.use('/logic',logicRoutes)
 app.use('/sculpture',sculptureRoutes)
 app.use('/users',usersRoutes)
+app.use('/help',helpRoutes)
 
 app.use(express.static('public'))
 

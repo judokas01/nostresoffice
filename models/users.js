@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const passportLocalMongoose = require('passport-local-mongoose')
-const History = require('./histories')
+const Task = require('./tasks')
 const Payment = require('./payments')
 const randomstring = require("randomstring")
 const Schema = mongoose.Schema
@@ -26,9 +26,9 @@ const UserSchema = new Schema({
         enum: ['free', 'paid'],
         default: 'free'
     },
-    history: {
+    Task: {
         type: Schema.Types.ObjectId,
-        ref: 'History'
+        ref: 'Task'
     },
     payment: {
         type: Schema.Types.ObjectId,
@@ -46,7 +46,7 @@ const UserSchema = new Schema({
  */
 UserSchema.post('findOneAndDelete', async function (doc) {
     if (doc) {
-        await History.deleteMany({
+        await Task.deleteMany({
             _id: {
                 $in: doc.reviews
             }

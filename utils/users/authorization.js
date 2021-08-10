@@ -1,5 +1,5 @@
 const sanitize = require('./../validators/sanitize')
-const History = require('../../models/histories')
+const Task = require('../../models/tasks')
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -30,7 +30,7 @@ module.exports.canAccessThisFile = async (req, res, next) => {
         isAdmin : false}
     }
 
-    const result = await History.findOne({
+    const result = await Task.findOne({
         'data.filename': id
     })
 

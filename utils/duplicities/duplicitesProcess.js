@@ -1,7 +1,7 @@
 const ExcelJS = require('exceljs');
 const path = require('path')
 const readXlsxFile = require('read-excel-file/node')
-const History = require('../../models/histories')
+const Task = require('../../models/tasks')
 const { getPreview } = require('./index')
 
 module.exports.duplicityProcess = async (data,username) => {

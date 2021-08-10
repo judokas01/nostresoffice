@@ -1,12 +1,13 @@
 const multer = require('multer')
 const { storage } = multer({ dest: 'public/uploads/' })
 const upload = multer({ storage })
-const History = require('../models/histories')
+const Task = require('../models/tasks')
 const fs = require("fs")
 const { deleteFile } = require('../utils/deleteFile')
 const filePreview = require('../utils/duplicities')
 const { duplicityProcess } = require('../utils/duplicities/duplicitesProcess')
 const { sanitizeString } = require('../utils/validators/sanitize')
+const History = require('./../models/histories')
 
 
 
@@ -22,19 +23,21 @@ module.exports.uploadFileAndStore = async (req, res, next) => {
 
     if (allowedUploads.includes(req.file.mimetype)) {
         if (!req.user) {
-            req.flash('error', `Pro nahrání souboru musíte být přihlášení.`)
-            res.redirect('/users/login')
+            //console.log('does not exists')
+            res.status(403).send('user is not loged in')
+
+        } else {
+            const data = {
+                author: req.user._id,
+                timestamp: Date.now(),
+                sessionId: req.sessionID,
+                data: req.file,
+                finished: false
+            }
+            const result = new Task(data)
+            await result.save()
+            await res.send(result)
         }
-        const data = {
-            author: req.user._id,
-            timestamp: Date.now(),
-            sessionId: req.sessionID,
-            data: req.file,
-            finished: false
-        }
-        const result = new History(data)
-        await result.save()
-        await res.send(result)
 
     } else {
         //deletes unsuported files
@@ -44,17 +47,16 @@ module.exports.uploadFileAndStore = async (req, res, next) => {
         )
     }
 
-
-
 }
+
 
 /**
  * renders the upload - files site aka wizard step one
  */
 module.exports.renderWizardStepOne = async (req, res, next) => {
-    const filesToDelete = await History.find({ "sessionId": req.sessionID })
+    const filesToDelete = await Task.find({ "sessionId": req.sessionID })
     filesToDelete.forEach(el => { deleteFile(el.data) })
-    await History.deleteMany({ "sessionId": req.sessionID })
+    await Task.deleteMany({ "sessionId": req.sessionID })
     const functionType = 'duplicities'
     res.render('wizard/duplicities/stepOne', { functionType })
 
@@ -64,7 +66,7 @@ module.exports.renderWizardStepOne = async (req, res, next) => {
  * renders the second step for duplicities
  */
 module.exports.renderWizardStepTwo = async (req, res, next) => {
-    const files = await History.find({ "sessionId": req.sessionID })
+    const files = await Task.find({ "sessionId": req.sessionID })
     res.render('wizard/duplicities/stepTwo', { files })
 
 }
@@ -76,7 +78,7 @@ module.exports.renderWizardStepTwo = async (req, res, next) => {
 
 module.exports.filePreview = async (req, res, next) => {
     const { id } = req.params
-    const file = await History.findOne({
+    const file = await Task.findOne({
         'data.filename': id
     })
 
@@ -93,7 +95,7 @@ module.exports.filePreview = async (req, res, next) => {
 module.exports.validateFilesStructure = async (req, res, next) => {
 
 
-    const files = await History.find({ "sessionId": req.sessionID })
+    const files = await Task.find({ "sessionId": req.sessionID })
 
     const result = await filePreview.compareStructure(files)
 
@@ -122,6 +124,20 @@ module.exports.processFiles = async (req, res, next) => {
     }
     if (!req.user.username) req.user = { username: anonymous }
     const result = await duplicityProcess(data, req.user.username)
+
+
+    const dbData = {
+        author: req.user._id,
+        timestamp: Date.now(),
+        files: [...result],
+        type: 'duplicity'
+    }
+
+    const dbUpload = new History(dbData)
+    await dbUpload.save()
+
+
+
 
     res.send(result)
 }

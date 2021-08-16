@@ -26,7 +26,7 @@ const UserSchema = new Schema({
         enum: ['free', 'paid'],
         default: 'free'
     },
-    Task: {
+    task: {
         type: Schema.Types.ObjectId,
         ref: 'Task'
     },

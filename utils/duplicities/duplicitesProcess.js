@@ -6,13 +6,11 @@ const { getPreview } = require('./index')
 
 module.exports.duplicityProcess = async (data,username) => {
     const filesToProcess = await getFilesContent(data)
-    
-
     //files are all the files in aray of objects
-
     const params = paramMerge(data.params)
     //divide 
     const rawDuplicityObject = await duplicityMarker(filesToProcess, params.columns)
+
     rawDuplicityObject.filesdata = filesAndSheetsData(filesToProcess)
     const newFiles = createFiles(rawDuplicityObject, params,username)
 
@@ -61,16 +59,18 @@ const getFilesContent = async (data) => {
 const duplicityMarker = async (files, colums) => {
     const nonDuplicates = []
     const duplicates = []
+    const nonDuplicatesMap = new Map()
     var header = []
     files.map(file => {
         file.sheets.map((sheet) => {
 
             sheet.data.map((row, index) => {
+               // console.log(index)
                 if (index == 0) {
                     //assing header
                     header = row
                 } else {
-                    const isUniqueValue = isDuplicate(nonDuplicates, row, colums)
+                    const isUniqueValue = isDuplicate( row, colums,nonDuplicatesMap)
 
 
                     if (isUniqueValue === true) {
@@ -80,6 +80,7 @@ const duplicityMarker = async (files, colums) => {
                             sheet: sheet,
                             occurrenceNum: 1
                         }
+                        nonDuplicatesMap.set(comparisionString(row,colums))
                         nonDuplicates.push(save)
 
                     } else {
@@ -115,12 +116,19 @@ const duplicityMarker = async (files, colums) => {
  * returns true, if this row is not duplicate yet
  */
 
-const isDuplicate = (nonDuplicates, row, columns) => {
+const isDuplicate = (row, columns, nonDuplicatesMap) => {
     const rowText = comparisionString(row, columns)
+    
+    if (nonDuplicatesMap.size == 0) return true
+  //  if (nonDuplicates.length == 0) return true
 
-    if (nonDuplicates.length == 0) return true
+    if(nonDuplicatesMap.has(rowText)){
+        return false
+    }else{
+        return true
+    }
 
-    for (let index = 0; index < nonDuplicates.length; index++) {
+  /*   for (let index = 0; index < nonDuplicates.length; index++) {
         const element = nonDuplicates[index];
         const nonDuplicateText = comparisionString(element.data, columns)
 
@@ -129,7 +137,7 @@ const isDuplicate = (nonDuplicates, row, columns) => {
         }
     }
 
-    return true
+    return true */
 
 }
 

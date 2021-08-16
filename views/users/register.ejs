@@ -9,12 +9,12 @@
                     <form action="/users" method="POST" class="validated-form" novalidate>
                         <div class="mb-3">
                             <label class="form-label" for="username">Uživatelské jméno</label>
-                            <input class="form-control" type="text" id="username" name="username" required autofocus>
+                            <input class="form-control" type="text" id="username" value="<%= (formdata) ? formdata.username : '' %>" name="username" required autofocus>
 
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="email">Email</label>
-                            <input class="form-control" type="email" id="email" name="email" required>
+                            <input class="form-control" type="email" id="email" value="<%= (formdata) ? formdata.email : '' %>" name="email" required>
                             <div class="invalid-feedback">
                                 Zadejte email ve tvaru: novak@seznam.cz
                             </div>
@@ -32,12 +32,12 @@
 
                         <div class="mb-3">
                             <label class="form-label" for="firstname">Křestní jméno</label>
-                            <input class="form-control" type="" id="firstname" name="firstname" required>
+                            <input class="form-control" type="" id="firstname" value="<%= (formdata) ? formdata.firstname : '' %>" name="firstname" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="lastname">Příjmení</label>
-                            <input class="form-control" type="lastname" id="lastname" name="lastname" required>
+                            <input class="form-control" type="lastname" id="lastname" value="<%= (formdata) ? formdata.lastname : '' %>" name="lastname" required>
                         </div>
                         <button class="btn btn-success btn-block">Registrovat</button>
                     </form>

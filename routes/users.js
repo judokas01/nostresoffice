@@ -5,7 +5,7 @@ const User = require('../models/users')
 const passport = require('passport')
 const { isLoggedIn, isAuthorized } = require('../utils/users/authorization')
 const users = require('../controllers/userController')
-const { validateRegistration } = require('../utils/validators/validateRegistration')
+
 
 
 
@@ -15,7 +15,7 @@ const { validateRegistration } = require('../utils/validators/validateRegistrati
 
 router.route('/')
     .get(isLoggedIn, users.renderUserPage)
-    .post(/* validateRegistration, */catchAsync(users.registerUser))
+    .post(users.validateRegistration,catchAsync(users.registerUser))
 
 
 

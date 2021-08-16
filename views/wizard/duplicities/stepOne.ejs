@@ -1,4 +1,9 @@
 <% layout('layouts/boilerplate')%>
+<% if (user) { %>
+    <% if (user.active==false) { %>
+        <%- include('../../partials/notAuthentificated') %>
+    <% } %>
+<% } %>
 <!--     <link rel="stylesheet" href="/js/dropzone/dropzone.min.css"> -->
     <div class="text-center justify-content-center">
         <div id="root"></div>

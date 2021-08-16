@@ -5,13 +5,15 @@ const escape = require('escape-html');
 const sanitize = require('../utils/validators/sanitize')
 const randomstring = require("randomstring")
 const { passwordStrength } = require('check-password-strength');
+const { passCheck } = require('../utils/validators/validateRegistration')
 
 
 /**
  * renders registration form
  */
 module.exports.renderRegisterForm = (req, res) => {
-    res.render('users/register')
+    const { formdata } = req.session
+    res.render('users/register', { formdata })
 }
 
 
@@ -89,6 +91,7 @@ module.exports.registerUser = async (req, res) => {
                 return next(err)
             }
         })
+        req.session.formdata.destroy()
         req.flash('success', 'Děkujeme za registraci. Na váš email Vám přišel email s verifikačním kódem.')
         res.redirect('/users')
     } catch (e) {
@@ -318,7 +321,49 @@ module.exports.changeForgottenPassword = async (req, res, next) => {
         req.flash('success', 'Heslo bylo změněno, přihlašte se prosím.')
         res.redirect('/users/login')
     }
+}
 
+module.exports.validateRegistration = async (req, res, next) => {
+
+    console.log(req.body)
+    const existsCheck = await User.findOne({
+        $or: [
+            { 'username': req.body.username },
+            { 'email': { $eq: req.body.email } }
+        ]
+
+    })
+    console.log(existsCheck)
+    if (existsCheck) {
+        const passObj = req.body
+        passObj.password = ''
+        passObj.password2 = ''
+        req.session.formdata = passObj
+        if (existsCheck.username == req.body.username) {
+            console.log('username')
+            req.flash('error', 'Uživatelské jmnénu už existuje!')
+            res.redirect(`users/register`)
+        } else if (existsCheck.email == req.body.email) {
+            console.log('email')
+            req.flash('error', 'Email už existuje!')
+            res.redirect(`users/register`)
+        }
+    } else {
+
+
+        const passCh = passCheck(req, res, next)
+
+        if (passCh.id > 0) {
+            next()
+        } else {
+            const passObj = req.body
+            passObj.password = ''
+            passObj.password2 = ''
+            req.session.formdata = passObj
+            req.flash('error', 'Zvolte silnější heslo!')
+            res.redirect(`users/register`)
+        }
+    }
 
 
 }

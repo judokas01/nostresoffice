@@ -12,6 +12,8 @@ const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
  * @returns 
  */
 const getPreview = async (fileObj,numberOfLines) => {
+	const startTime = Date.now()
+    console.log(`start reading ${(Date.now()-startTime)/1000}`)
 
 	const baseFolder = __dirname
 	let filePath = path.normalize(`${baseFolder}/../../${fileObj.data.path}`)
@@ -19,6 +21,7 @@ const getPreview = async (fileObj,numberOfLines) => {
 
 	const output = await workbook.xlsx.readFile(`${filePath}`)
 		.then(function () {
+			console.log(`file read ${(Date.now()-startTime)/1000}`)
 
 			const worksheets = workbook.worksheets
 			const output = {
@@ -40,6 +43,7 @@ const getPreview = async (fileObj,numberOfLines) => {
 				})
 
 			}
+			console.log(`pushed into object ${(Date.now()-startTime)/1000}`)
 			return output
 
 		})
@@ -59,14 +63,10 @@ const getPreviewData = (worksheet, numberOfLines = worksheet.actualRowCount) => 
 
 	const output = []
 	for (let index = 1; index < numberOfLines; index++) {
-		//console.log(`row : ${index}`)
 		const row = worksheet.getRow(index);
-		const rowData = []
-		for (let index = 1; index < worksheet.columnCount + 1; index++) {
-			//	console.log(`colum : ${index}`)
-			rowData.push(row.getCell(index).value)
 
-		}
+		const rowData = row.values
+
 		output.push(rowData)
 
 	}

@@ -1,6 +1,7 @@
 const { authmail } = require('../utils/emails/authemail')
 const { forgotmail } = require('../utils/emails/forgotmail')
 const User = require('../models/users')
+const History = require('../models/histories')
 const escape = require('escape-html');
 const sanitize = require('../utils/validators/sanitize')
 const randomstring = require("randomstring")
@@ -53,15 +54,17 @@ module.exports.validateForgottenPassword = async (req, res, next) => {
  * renders users page (empty for now)
  */
 module.exports.renderUserPage = async (req, res) => {
+    const history = await History.find({author: req.user._id})
+    console.log(history)
     if (req.user.isAdmin) {
         const user = req.user
         const users = await User.find({})
 
-        res.render('users/index', { user, users })
+        res.render('users/index', { user, users, history })
     } else {
         const users = []
         const user = req.user
-        res.render('users/index', { user, users })
+        res.render('users/index', { user, users, history })
     }
 }
 

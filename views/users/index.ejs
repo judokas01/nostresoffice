@@ -1,5 +1,10 @@
 <% layout('layouts/boilerplate') %>
 
+<script type='text/javascript'>
+    const history =<%- JSON.stringify(history) %>
+
+  </script>
+
     <% if (user) { %>
         <% if (user.active==false) { %>
             <%- include('../partials/notAuthentificated') %>
@@ -33,7 +38,7 @@
                                     <div class="card-header">
                                         <h5 class="card-title">Poslední aktivita</h5>
                                     </div>
-                                    <div class="card-body">
+                                    <div id="history" class="card-body">
 
                                         <ul class="card-text">
                                             <li>5.5. 206569</li>
@@ -82,3 +87,6 @@
                                 <% } %>
 
                         </div>
+    
+
+                        <script src="/js/userPage.js"></script>
